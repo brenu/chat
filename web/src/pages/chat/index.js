@@ -7,7 +7,7 @@ function Chat() {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
-  const socket = useMemo(() => socketio("http://192.168.15.41:3333", {}), []);
+  const socket = useMemo(() => socketio("http://localhost:3333", {}), []);
 
   socket.off("message").on("message", (msg) => {
     setMessages((messages) => [...messages, msg]);
