@@ -1,10 +1,10 @@
 import React from "react";
 import "./App.css";
 
-import Chat from "./pages/chat";
+import Routes from "./routes";
 
 function App() {
-  return <Chat />;
+  return <Routes />;
 }
 
 export default App;
