@@ -73,6 +73,14 @@
   overflow-wrap: break-word;
 }
 
-.message-text + p {
-  padding-top: 5px;
+.message-text-container + div {
+  padding-top: 10px;
+}
+
+.chat-error-message {
+  font-family: Ubuntu, -apple-system, Arial, Helvetica, sans-serif;
+  font-size: 60px;
+  font-weight: bold;
+  color: #fff;
+  text-align: center;
 }

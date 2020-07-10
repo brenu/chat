@@ -1,11 +1,22 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import socketio from "socket.io-client";
 
 import "./styles.css";
 
 function Chat() {
+  const [isUserValid, setIsUserValid] = useState(false);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
+  const [nickname, setNickname] = useState(null);
+
+  useEffect(() => {
+    const tempNickname = localStorage.getItem("nickname");
+
+    if (tempNickname) {
+      setIsUserValid(true);
+      setNickname(tempNickname);
+    }
+  }, []);
 
   const socket = useMemo(() => socketio("http://localhost:3333", {}), []);
 
@@ -15,33 +26,49 @@ function Chat() {
   });
 
   function handleSubmit() {
-    socket.emit("message", message);
+    socket.emit("message", { nickname: nickname, message: message });
     setMessage("");
     return;
   }
 
   return (
-    <div className="container">
-      <div className="chat-container">
-        <div className="messages-container">
-          {messages.map((message) => {
-            return <p className="message-text">{message}</p>;
-          })}
+    <>
+      {isUserValid === true ? (
+        <div className="container">
+          <div className="chat-container">
+            <div className="messages-container">
+              {messages.map((message) => {
+                return (
+                  <div className="message-text-container">
+                    <p>{message.nickname}</p>
+                    <p className="message-text">{message.message}</p>
+                  </div>
+                );
+              })}
+            </div>
+            <div className="send-container">
+              <input
+                className="send-input"
+                placeholder="Manda tua mensagem :)"
+                type="text"
+                value={message}
+                onChange={(event) => setMessage(event.target.value)}
+                onKeyDown={(event) =>
+                  event.keyCode === 13 ? handleSubmit() : null
+                }
+              />
+              <button className="send-button" onClick={handleSubmit}>
+                Enviar
+              </button>
+            </div>
+          </div>
         </div>
-        <div className="send-container">
-          <input
-            className="send-input"
-            placeholder="Manda tua mensagem :)"
-            type="text"
-            value={message}
-            onChange={(event) => setMessage(event.target.value)}
-          />
-          <button className="send-button" onClick={handleSubmit}>
-            Enviar
-          </button>
+      ) : (
+        <div className="container">
+          <h1 className="chat-error-message">Defina um nickname :)</h1>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 }
 
