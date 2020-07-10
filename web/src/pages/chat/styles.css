@@ -21,12 +21,14 @@
 }
 
 .messages-container {
+  max-width: 399px;
   width: 100%;
   padding: 10px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: baseline;
+  align-items: flex-start;
+  word-break: break-all;
 }
 
 .send-container {
@@ -68,6 +70,7 @@
   font-family: Ubuntu, -apple-system, Arial, Helvetica, sans-serif;
   font-size: 20;
   color: #777;
+  overflow-wrap: break-word;
 }
 
 .message-text + p {
