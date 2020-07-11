@@ -18,6 +18,14 @@ function Chat() {
     }
   }, []);
 
+  useEffect(() => {
+    if (nickname !== null) {
+      var container = document.getElementById("messages-container");
+      container.scrollTop = container.scrollHeight - container.clientHeight;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [messages]);
+
   const socket = useMemo(() => socketio("http://localhost:3333", {}), []);
 
   socket.off("message").on("message", (msg) => {
@@ -30,16 +38,15 @@ function Chat() {
     setMessage("");
     return;
   }
-
   return (
     <>
       {isUserValid === true ? (
         <div className="container">
           <div className="chat-container">
-            <div className="messages-container">
+            <div id="messages-container" className="messages-container">
               {messages.map((message) => {
                 return (
-                  <div className="message-text-container">
+                  <div key={message.message} className="message-text-container">
                     <p>{message.nickname}</p>
                     <p className="message-text">{message.message}</p>
                   </div>
