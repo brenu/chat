@@ -20,6 +20,11 @@
   box-shadow: 4px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
+/* Hiding scrollbar */
+.messages-container::-webkit-scrollbar {
+  display: none;
+}
+
 .messages-container {
   max-width: 399px;
   width: 100%;
@@ -29,6 +34,10 @@
   justify-content: flex-start;
   align-items: flex-start;
   word-break: break-all;
+
+  /* Hiding scrollbar */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 
   overflow-y: scroll;
 }
