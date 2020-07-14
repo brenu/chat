@@ -8,12 +8,14 @@ function Chat() {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [nickname, setNickname] = useState(null);
+  const [color, setColor] = useState("");
 
   useEffect(() => {
     const tempNickname = localStorage.getItem("nickname");
 
     if (tempNickname) {
       setIsUserValid(true);
+      setColor("#" + parseInt(Math.random() * 0xffffff).toString(16));
       setNickname(tempNickname);
     }
   }, []);
@@ -34,7 +36,7 @@ function Chat() {
   });
 
   function handleSubmit() {
-    socket.emit("message", { nickname: nickname, message: message });
+    socket.emit("message", { nickname, message, color });
     setMessage("");
     return;
   }
@@ -47,7 +49,15 @@ function Chat() {
               {messages.map((message) => {
                 return (
                   <div key={message.message} className="message-text-container">
-                    <p>{message.nickname}</p>
+                    <p
+                      style={{
+                        fontSize: "14pt",
+                        fontWeight: "bold",
+                        color: message.color,
+                      }}
+                    >
+                      {message.nickname}
+                    </p>
                     <p className="message-text">{message.message}</p>
                   </div>
                 );
