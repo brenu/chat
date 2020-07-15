@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { FaSignInAlt } from "react-icons/fa";
 
 import "./styles.css";
 
@@ -29,7 +30,9 @@ function Login() {
             value={nickname}
             onChange={(event) => setNickname(event.target.value)}
           />
-          <button type="submit">Enter</button>
+          <button type="submit">
+            <FaSignInAlt color="#fffff" size={20} />
+          </button>
         </div>
       </form>
     </div>
