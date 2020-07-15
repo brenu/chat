@@ -66,8 +66,7 @@
 .send-container button {
   background: #fff;
   border: 0;
-  border-left: 1px solid #ccc;
-  border-bottom-right-radius: 5px;
+  border-radius: 5px;
   width: 50px;
 
   cursor: pointer;

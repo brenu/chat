@@ -1,5 +1,6 @@
 import React, { useMemo, useState, useEffect } from "react";
 import socketio from "socket.io-client";
+import { FaPaperPlane } from "react-icons/fa";
 
 import "./styles.css";
 
@@ -12,10 +13,21 @@ function Chat() {
 
   useEffect(() => {
     const tempNickname = localStorage.getItem("nickname");
+    const colors = [
+      "#B15903",
+      "#E926B8",
+      "#5685B0",
+      "#46CC4F",
+      "#BB05B9",
+      "#DA3340",
+      "#33D191",
+      "#DCDD1F",
+      "#3758AB",
+    ];
 
     if (tempNickname) {
       setIsUserValid(true);
-      setColor("#" + parseInt(Math.random() * 0xffffff).toString(16));
+      setColor(colors[Math.floor(Math.random() * colors.length)]);
       setNickname(tempNickname);
     }
   }, []);
@@ -28,7 +40,10 @@ function Chat() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages]);
 
-  const socket = useMemo(() => socketio("http://localhost:3333", {}), []);
+  const socket = useMemo(
+    () => socketio("https://brenuchatserver.herokuapp.com/", {}),
+    []
+  );
 
   socket.off("message").on("message", (msg) => {
     setMessages((messages) => [...messages, msg]);
@@ -75,7 +90,7 @@ function Chat() {
                 }
               />
               <button className="send-button" onClick={handleSubmit}>
-                Enviar
+                <FaPaperPlane color="rgb(98, 245, 135)" size={20} />
               </button>
             </div>
           </div>
